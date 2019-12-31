@@ -15,6 +15,7 @@ MKVToolNix 41.0.0
         2. [Configuration and compilation](#242-configuration-and-compilation)
     5. [Notes for compilation on (Open)Solaris](#25-notes-for-compilation-on-opensolaris)
     6. [Unit tests](#26-unit-tests)
+    7. [Pre-compiled versions](#27-pre-compiled-versions)
 3. [Reporting bugs](#3-reporting-bugs)
 4. [Test suite and continuous integration tests](#4-test-suite-and-continuous-integration-tests)
 5. [Code of Conduct](#5-code-of-conduct)
@@ -70,6 +71,8 @@ development version. As both Matroska and MKVToolNix are under heavy
 development, there might be features available in the git repository
 that are not available in the releases. On the other hand the git
 repository version might not even compile.
+
+To install pre-compiled distributions for your system, see 
 
 ## 2.1. Requirements
 
@@ -264,6 +267,15 @@ do this, you have to follow these steps:
 
         rake tests:run_unit
 
+## 2.7. Pre-compiled versions
+
+### 2.7.1 MacOS
+
+Using [Homebrew](https://brew.sh/), the graphical application MKVToolNix will be installed in your `/Applications` folder, and the `mkv*` command-line tools will also be available in your terminal.:
+
+```bash
+$ brew cask install mkvtoolnix
+```
 
 # 3. Reporting bugs
 
