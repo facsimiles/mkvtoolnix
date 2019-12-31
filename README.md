@@ -72,8 +72,6 @@ development, there might be features available in the git repository
 that are not available in the releases. On the other hand the git
 repository version might not even compile.
 
-To install pre-compiled distributions for your system, see 
-
 ## 2.1. Requirements
 
 ### 2.1.1. Hard requirements
