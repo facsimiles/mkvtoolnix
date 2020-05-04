@@ -57,6 +57,20 @@ AC_ARG_WITH([boost],
     [want_boost="yes"])
 
 
+AC_ARG_WITH([boost-includedir],
+        AS_HELP_STRING([--with-boost-includedir=INC_DIR],
+        [Force given directory for boost headers. Note that this will override headers path detection, so use this parameter only if default library detection fails and you know exactly where your boost libraries are located.]),
+        [
+        if test -d "$withval"
+        then
+                ac_boost_inc_path="$withval"
+        else
+                AC_MSG_ERROR(--with-boost-includedir expected directory name)
+        fi
+        ],
+        [ac_boost_inc_path=""]
+)
+
 AC_ARG_WITH([boost-libdir],
         AS_HELP_STRING([--with-boost-libdir=LIB_DIR],
         [Force given directory for boost libraries. Note that this will override library path detection, so use this parameter only if default library detection fails and you know exactly where your boost libraries are located.]),
@@ -134,6 +148,12 @@ if test "x$want_boost" = "xyes"; then
                 break;
             fi
         done
+    fi
+
+    dnl overwrite cpp flags if we have required special directory with
+    dnl --with-boost-incdir parameter
+    if test "$ac_boost_inc_path" != ""; then
+        BOOST_CPPFLAGS="-I$ac_boost_inc_path"
     fi
 
     dnl overwrite ld flags if we have required special directory with
