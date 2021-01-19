@@ -985,9 +985,10 @@ kax_reader_c::handle_tags(mm_io_c *io,
 }
 
 void
-kax_reader_c::handle_track_statistics_tags() {
+kax_reader_c::handle_track_statistics_tags(bool get_source_id) {
   for (auto const &track : m_tracks) {
-    track->get_source_id_from_track_statistics_tags();
+    if (get_source_id)
+      track->get_source_id_from_track_statistics_tags();
 
     if (!mtx::hacks::is_engaged(mtx::hacks::KEEP_TRACK_STATISTICS_TAGS))
       track->discard_track_statistics_tags();
@@ -1495,7 +1496,7 @@ kax_reader_c::read_deferred_level1_elements(KaxSegment &segment) {
     for (auto position : m_deferred_l1_positions[dl1t_chapters])
       handle_chapters(m_in.get(), &segment, position);
 
-  handle_track_statistics_tags();
+  handle_track_statistics_tags(!m_ti.m_track_tags.none());
 
   if (!m_ti.m_no_global_tags)
     process_global_tags();

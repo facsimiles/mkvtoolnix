@@ -289,7 +289,7 @@ protected:
   virtual void handle_seek_head(mm_io_c *io, libebml::EbmlElement *l0, int64_t pos);
   virtual void handle_tags(mm_io_c *io, libebml::EbmlElement *l0, int64_t pos);
   virtual void process_global_tags();
-  virtual void handle_track_statistics_tags();
+  virtual void handle_track_statistics_tags(bool get_source_id);
 
   virtual bool unlace_vorbis_private_data(kax_track_t *t, unsigned char *buffer, int size);
 
