@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!-- Copyright 2020 Moritz Bunkus -->
+<?xml version="1.0" encoding="UTF-8"?><!-- Copyright 2021 Moritz Bunkus -->
 <component type="desktop">
   <id>org.bunkus.mkvtoolnix-gui</id>
   <launchable type="desktop-id">org.bunkus.mkvtoolnix-gui.desktop</launchable>
@@ -32,8 +32,11 @@
   </categories>
   <mimetypes>
    <mimetype>application/x-mkvtoolnix-gui-settings</mimetype>
+   <mimetype>video/x-matroska-3d</mimetype>
    <mimetype>video/x-matroska</mimetype>
    <mimetype>audio/x-matroska</mimetype>
+   <mimetype>video/webm</mimetype>
+   <mimetype>audio/webm</mimetype>
   </mimetypes>
   <url type="bugtracker">https://gitlab.com/mbunkus/mkvtoolnix/issues/</url>
   <url type="contact">https://mkvtoolnix.download/community.html</url>
