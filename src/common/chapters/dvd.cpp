@@ -26,6 +26,11 @@
 #include "common/strings/parsing.h"
 #include "common/timestamp.h"
 
+static timestamp_c frames_to_timestamp_ns(unsigned int nframes, unsigned int fps) {
+      auto factor = fps == 30 ? 1001 : 1000;
+      return timestamp_c::ns(1000000ull * factor * nframes / fps);
+}
+
 namespace mtx::chapters {
 
 std::vector<std::vector<timestamp_c>>
@@ -94,14 +99,12 @@ parse_dvd(std::string const &file_name) {
         cur_frames    += ((dt->frame_u & 0x30) >> 4) * 10 + (dt->frame_u & 0x0f);
       }
 
-      auto factor = fps == 30 ? 1001 : 1000;
-      timestamps.emplace_back(timestamp_c::ns(1000000ull * factor * overall_frames / fps));
+      timestamps.emplace_back(frames_to_timestamp_ns(overall_frames, fps));
 
       overall_frames += cur_frames;
     }
 
-    auto factor = fps == 30 ? 1001 : 1000;
-    timestamps.emplace_back(timestamp_c::ns(1000000ull * factor * overall_frames / fps));
+    timestamps.emplace_back(frames_to_timestamp_ns(overall_frames, fps));
   }
 
   return titles_and_timestamps;
