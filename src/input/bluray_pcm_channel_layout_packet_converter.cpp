@@ -111,17 +111,24 @@ bluray_pcm_channel_layout_packet_converter_c::remap_8ch(packet_cptr const &packe
 
 bool
 bluray_pcm_channel_layout_packet_converter_c::convert(packet_cptr const &packet) {
+  bool can_convert = (packet->data->get_size() %
+                      (m_bytes_per_channel * (m_num_output_channels +
+                                              (m_num_output_channels % 2)))) == 0;
+
+  if (!can_convert) {
+    mxwarn(fmt::format("packet of {0} bytes is not sample-aligned; "
+                       "skipping bluray pcm channel layout packet converter for this packet\n",
+                       packet->data->get_size()));
+    return false;
+  }
+
   // remove superfluous extra channel
   if ((m_num_output_channels % 2) != 0)
     removal(packet);
 
   // remap channels into WAVEFORMATEXTENSIBLE channel order
-  if (m_remap_buf) {
-    auto remainder = packet->data->get_size() % (m_bytes_per_channel * m_num_output_channels);
-    if (remainder != 0)
-      packet->data->set_size(packet->data->get_size() - remainder);
+  if (m_remap_buf)
     (this->*m_remap)(packet);
-  }
 
   m_ptzr->process(packet);
   return true;
