@@ -1,4 +1,5 @@
 AC_CANONICAL_TARGET
+AC_CANONICAL_HOST
 SAVED_CFLAGS="$CFLAGS"
 AC_PROG_CC
 CFLAGS="$SAVED_CFLAGS"
@@ -17,6 +18,21 @@ AC_CHECK_TOOL(LD, ld, :)
 AC_CHECK_TOOL(STRINGS, strings, :)
 AC_CHECK_TOOL(OBJDUMP, objdump, :)
 PKG_PROG_PKG_CONFIG
+
+dnl Setting ARFLAGS
+ARFLAGS=crS
+AC_SUBST([ARFLAGS])
+AC_ARG_VAR([ARFLAGS], [AR options [default: crS]])
+
+dnl Setting RANLIB_FLAGS
+case $host in
+  *darwin*)
+    RANLIB_FLAGS="-no_warning_for_no_symbols";;
+  *)
+    RANLIB_FLAGS="";;
+esac
+AC_SUBST([RANLIB_FLAGS])
+AC_ARG_VAR([RANLIB_FLAGS], [RANLIB options [default: empty on linux, -no_warning_for_no_symbols on darwin]])
 
 dnl Check for headers
 AC_HEADER_STDC()
