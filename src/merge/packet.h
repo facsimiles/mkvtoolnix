@@ -218,19 +218,7 @@ struct packet_t {
   bool
   is_key_frame()
     const {
-    return (key_flag && *key_flag) || (!has_bref() && !has_fref());
-  }
-
-  bool
-  is_p_frame()
-    const {
-    return (has_bref() || has_fref()) && (has_bref() != has_fref());
-  }
-
-  bool
-  is_b_frame()
-    const {
-    return has_bref() && has_fref();
+    return key_flag ? *key_flag : !has_bref() && !has_fref();
   }
 
   packet_extension_c *

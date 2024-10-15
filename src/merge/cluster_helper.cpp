@@ -174,7 +174,7 @@ cluster_helper_c::split_if_necessary(packet_cptr const &packet) {
 
     if (!m->packets.empty())
       // Cluster + Cluster timestamp: roughly 21 bytes. Add all frame sizes & their overheaders, too.
-      additional_size = 21 + std::accumulate(m->packets.begin(), m->packets.end(), 0, [](size_t size, const packet_cptr &p) { return size + p->data->get_size() + (p->is_key_frame() ? 10 : p->is_p_frame() ? 13 : 16); });
+      additional_size = 21 + std::accumulate(m->packets.begin(), m->packets.end(), 0, [](size_t size, const packet_cptr &p) { return size + p->data->get_size() + 10 + (p->has_bref() ? 3 : 0) + (p->has_fref() ? 3 : 0); });
 
     additional_size += 18 * m->num_cue_elements;
 

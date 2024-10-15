@@ -127,6 +127,7 @@ kax_block_blob_c::add_frame_auto(const libmatroska::KaxTrackEntry &track,
     }
 
   } else if (replace_simple_by_group()) {
+    assert(!key_flag || *key_flag); // assume !discardable_flag for !key_flag
     kax_block_group_c *group = static_cast<kax_block_group_c *>(Block.group);
     result = group->add_frame(track, timestamp, buffer, past_block, forw_block, lacing);
   }
