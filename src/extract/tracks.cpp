@@ -488,7 +488,7 @@ extract_tracks(kax_analyzer_c &analyzer,
       if (!cluster)
         break;
 
-      auto ctc = static_cast<kax_cluster_timestamp_c *> (cluster->FindFirstElt(EBML_INFO(kax_cluster_timestamp_c), false));
+      auto ctc = find_child<kax_cluster_timestamp_c> (*cluster);
       init_timestamp(*cluster, ctc ? ctc->GetValue() : 0, tc_scale);
 
       if (0 == verbose) {
