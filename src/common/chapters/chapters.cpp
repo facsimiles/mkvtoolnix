@@ -943,12 +943,12 @@ remove_entries(int64_t min_ts,
     last_atom_found    = true;
     entries[i].is_atom = true;
 
-    auto cts = static_cast<libmatroska::KaxChapterTimeStart *>(atom->FindFirstElt(EBML_INFO(libmatroska::KaxChapterTimeStart), false));
+    auto cts = find_child<libmatroska::KaxChapterTimeStart>(*atom);
 
     if (cts)
       entries[i].start = cts->GetValue();
 
-    auto cte = static_cast<libmatroska::KaxChapterTimeEnd *>(atom->FindFirstElt(EBML_INFO(libmatroska::KaxChapterTimeEnd), false));
+    auto cte = find_child<libmatroska::KaxChapterTimeStart>(*atom);
 
     if (cte)
       entries[i].end = cte->GetValue();
@@ -994,8 +994,8 @@ remove_entries(int64_t min_ts,
     if (entries[i].remove && !entries[i].spans)
       continue;
 
-    auto cts = static_cast<libmatroska::KaxChapterTimeStart *>(atom->FindFirstElt(EBML_INFO(libmatroska::KaxChapterTimeStart), false));
-    auto cte = static_cast<libmatroska::KaxChapterTimeEnd *>(atom->FindFirstElt(EBML_INFO(libmatroska::KaxChapterTimeEnd), false));
+    auto cts = find_child<libmatroska::KaxChapterTimeStart>(*atom);
+    auto cte = find_child<libmatroska::KaxChapterTimeEnd>(*atom);
 
     if (entries[i].spans)
       cts->SetValue(min_ts);
