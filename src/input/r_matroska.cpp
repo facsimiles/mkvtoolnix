@@ -2545,13 +2545,6 @@ kax_reader_c::process_simple_block(libmatroska::KaxCluster *cluster,
   auto key_flag         = block_simple->IsKeyframe();
   auto discardable_flag = block_simple->IsDiscardable();
 
-  if (!key_flag) {
-    if (discardable_flag)
-      block_fref = block_track->previous_timestamp;
-    else
-      block_bref = block_track->previous_timestamp;
-  }
-
   m_last_timestamp = block_timestamp;
   if (0 < block_simple->NumberFrames())
     m_in_file->set_last_timestamp(m_last_timestamp + (block_simple->NumberFrames() - 1) * frame_duration);
@@ -2588,7 +2581,6 @@ kax_reader_c::process_simple_block(libmatroska::KaxCluster *cluster,
     }
   }
 
-  block_track->previous_timestamp  = m_last_timestamp;
   block_track->units_processed    += block_simple->NumberFrames();
 }
 
@@ -2735,7 +2727,6 @@ kax_reader_c::process_block_group(libmatroska::KaxCluster *cluster,
     ptzr(block_track->ptzr).process(packet);
   }
 
-  block_track->previous_timestamp  = m_last_timestamp;
   block_track->units_processed    += block->NumberFrames();
 }
 
