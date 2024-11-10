@@ -172,16 +172,16 @@ teletext_to_srt_packet_converter_c::override_encoding(int page,
   if (itr == m_track_data.end())
     return;
 
-  if (mtx::included_in(iso639_alpha_3_code, "fre"))
+  if (mtx::included_in(iso639_alpha_3_code, "fra"))
     itr->second->m_forced_char_map_idx = 1;
 
   else if (mtx::included_in(iso639_alpha_3_code, "swe", "fin", "hun"))
     itr->second->m_forced_char_map_idx = 2;
 
-  else if (mtx::included_in(iso639_alpha_3_code, "cze", "slo"))
+  else if (mtx::included_in(iso639_alpha_3_code, "ces", "slk"))
     itr->second->m_forced_char_map_idx = 3;
 
-  else if (mtx::included_in(iso639_alpha_3_code, "ger"))
+  else if (mtx::included_in(iso639_alpha_3_code, "deu"))
     itr->second->m_forced_char_map_idx = 4;
 
   else if (mtx::included_in(iso639_alpha_3_code, "por", "spa"))
@@ -190,7 +190,7 @@ teletext_to_srt_packet_converter_c::override_encoding(int page,
   else if (mtx::included_in(iso639_alpha_3_code, "ita"))
     itr->second->m_forced_char_map_idx = 6;
 
-  else if (mtx::included_in(iso639_alpha_3_code, "rum"))
+  else if (mtx::included_in(iso639_alpha_3_code, "ron"))
     itr->second->m_forced_char_map_idx = 7;
 
   else if (mtx::included_in(iso639_alpha_3_code, "lav", "lit"))

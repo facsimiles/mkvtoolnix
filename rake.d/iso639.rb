@@ -1,7 +1,7 @@
 def create_iso639_language_list_file
   name_overrides = {
     "grc" => "Greek (ancient, -1453)",
-    "gre" => "Greek (modern, 1453-)",
+    "ell" => "Greek (modern, 1453-)",
   }
 
   content = Mtx::OnlineFile.download("https://www.loc.gov/standards/iso639-2/php/code_list.php", "iso-639-2.html")
@@ -19,12 +19,12 @@ def create_iso639_language_list_file
       alpha_3_t = row[0]
     end
 
-    entries_by_alpha_3[alpha_3_b] = {
+    entries_by_alpha_3[alpha_3_t] = {
       "name"           => row[2],
       "bibliographic"  => alpha_3_b == alpha_3_t ? nil : alpha_3_b,
       "alpha_2"        => row[1],
       "alpha_3"        => alpha_3_t,
-      "alpha_3_to_use" => alpha_3_b,
+      "alpha_3_to_use" => alpha_3_t,
       "has_639_2"      => true,
     }
   end
@@ -55,7 +55,7 @@ def create_iso639_language_list_file
     entry
   end.
     each do |entry|
-    alpha_3_to_use = entry["part2b"] || entry["id"]
+    alpha_3_to_use = entry["part2t"] || entry["id"]
 
     entry_639_2                        = entries_by_alpha_3[alpha_3_to_use]
     entries_by_alpha_3[alpha_3_to_use] = {
@@ -135,7 +135,7 @@ def create_iso639_language_list_file
     [ name.to_u8_c_string,
       entry["alpha_3_to_use"].to_c_string,
       (entry["alpha_2"] || '').to_c_string,
-      entry["bibliographic"] ? entry["alpha_3"].to_c_string : '""',
+      entry["bibliographic"] ? entry["bibliographic"].to_c_string : '""',
       entry["has_639_2"].to_s,
       (entry["deprecated"] || false).to_s,
     ]
