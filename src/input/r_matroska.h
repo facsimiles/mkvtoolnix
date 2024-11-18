@@ -97,8 +97,6 @@ struct kax_track_t {
 
   bool ok;
 
-  int64_t previous_timestamp;
-
   content_decoder_c content_decoder;
 
   std::shared_ptr<libmatroska::KaxTags> tags;
@@ -152,7 +150,6 @@ struct kax_track_t {
     , language{mtx::bcp47::language_c::parse("eng")}
     , units_processed(0)
     , ok(false)
-    , previous_timestamp(0)
     , tags(nullptr)
     , ptzr(-1)
     , ptzr_ptr(nullptr)
