@@ -763,7 +763,7 @@ must_be_present_in_master_by_id(libebml::EbmlId const &id) {
     return false;
   }
 
-  auto elt         = std::shared_ptr<libebml::EbmlElement>(&semantic->Create());
+  auto elt         = std::shared_ptr<libebml::EbmlElement>(&EBML_SEM_CREATE(semantic));
   auto has_default = has_default_value(*elt);
 
   mxdebug_if(s_debug, fmt::format("ID {0:08x}: {1} (does {2}have a default value)\n", id.GetValue(), !has_default, has_default ? "" : "not "));

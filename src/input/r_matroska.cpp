@@ -2398,7 +2398,7 @@ kax_reader_c::read_first_frames(kax_track_t *t,
       if (!cluster)
         return;
 
-      auto ctc = static_cast<kax_cluster_timestamp_c *> (cluster->FindFirstElt(EBML_INFO(kax_cluster_timestamp_c), false));
+      auto ctc = find_child<kax_cluster_timestamp_c> (*cluster);
       if (ctc)
         init_timestamp(*cluster, ctc->GetValue(), m_tc_scale);
 
@@ -2426,8 +2426,8 @@ kax_reader_c::read_first_frames(kax_track_t *t,
           }
 
         } else if (is_type<libmatroska::KaxBlockGroup>((*cluster)[bgidx])) {
-          auto block_group = static_cast<libmatroska::KaxBlockGroup *>((*cluster)[bgidx]);
-          auto block       = static_cast<libmatroska::KaxBlock *>(block_group->FindFirstElt(EBML_INFO(libmatroska::KaxBlock), false));
+          auto block_group = find_child<libmatroska::KaxBlockGroup>(*(*cluster)[bgidx]);
+          auto block       = find_child<libmatroska::KaxBlock>(*block_group);
 
           if (!block)
             continue;
