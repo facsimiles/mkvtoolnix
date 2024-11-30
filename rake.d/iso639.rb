@@ -168,7 +168,7 @@ namespace mtx::iso639 {
 std::vector<language_t> g_languages;
 
 struct language_init_t {
-  char const *english_name, *alpha_3_code, *alpha_2_code, *terminology_abbrev;
+  char const *english_name, *alpha_3_code, *alpha_2_code, *alpha_3_bib_code;
   bool is_part_of_iso639_2, is_deprecated;
 };
 
@@ -183,7 +183,7 @@ init() {
   g_languages.reserve(#{rows.size});
 
   for (language_init_t const *lang = s_languages_init, *end = lang + #{rows.size}; lang < end; ++lang)
-    g_languages.emplace_back(lang->english_name, lang->alpha_3_code, lang->alpha_2_code, lang->terminology_abbrev, lang->is_part_of_iso639_2, lang->is_deprecated);
+    g_languages.emplace_back(lang->english_name, lang->alpha_3_code, lang->alpha_2_code, lang->alpha_3_bib_code, lang->is_part_of_iso639_2, lang->is_deprecated);
 }
 
 } // namespace mtx::iso639
