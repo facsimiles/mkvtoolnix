@@ -40,6 +40,14 @@ doc_type_version_handler_c::doc_type_version_handler_c()
 doc_type_version_handler_c::~doc_type_version_handler_c() { // NOLINT(modernize-use-equals-default) Need to tell compiler where to put code for this function.
 }
 
+int doc_type_version_handler_c::get_version() const {
+  return p_func()->version;
+}
+
+int doc_type_version_handler_c::get_read_version() const {
+  return p_func()->read_version;
+}
+
 libebml::EbmlElement &
 doc_type_version_handler_c::render(libebml::EbmlElement &element,
                                    mm_io_c &file,

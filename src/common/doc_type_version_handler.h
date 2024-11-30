@@ -49,6 +49,9 @@ public:
 
   update_result_e update_ebml_head(mm_io_c &file);
 
+  int get_version() const;
+  int get_read_version() const;
+
 private:
   update_result_e do_update_ebml_head(mm_io_c &file);
 };
