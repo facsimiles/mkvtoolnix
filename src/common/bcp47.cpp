@@ -582,7 +582,7 @@ language_c::get_iso639_alpha_3_code()
 
   auto language = mtx::iso639::look_up(m_language);
   if (language)
-    return language->alpha_3_code;
+    return language_c::get_alpha_3_code(language.value());
 
   return {};
 }
@@ -598,16 +598,16 @@ language_c::get_closest_iso639_2_alpha_3_code()
     return "und"s;
 
   if (language->is_part_of_iso639_2)
-    return language->alpha_3_code;
+    return language_c::get_alpha_3_code(language.value());
 
-  auto extlang = mtx::iana::language_subtag_registry::look_up_extlang(language->alpha_3_code);
+  auto extlang = mtx::iana::language_subtag_registry::look_up_extlang(language_c::get_alpha_3_code(language.value()));
   if (!extlang || extlang->prefixes.empty())
     return "und"s;
 
   auto prefix_language = mtx::iso639::look_up(extlang->prefixes.front());
 
   if (prefix_language && prefix_language->is_part_of_iso639_2)
-    return prefix_language->alpha_3_code;
+    return language_c::get_alpha_3_code(prefix_language.value());
 
   return "und"s;
 }
