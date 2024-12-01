@@ -14,6 +14,7 @@
 #pragma once
 
 #include "common/common_pch.h"
+#include "common/iso639.h"
 
 namespace mtx::bcp47 {
 
@@ -60,6 +61,7 @@ protected:
 
   static bool ms_disabled;
   static normalization_mode_e ms_normalization_mode;
+  static bool ms_use_bib_code;
 
 public:
   void clear() noexcept;
@@ -73,6 +75,8 @@ public:
   bool has_valid_iso3166_1_alpha_2_or_top_level_domain_country_code() const noexcept;
   std::string get_iso3166_1_alpha_2_code() const noexcept;
   std::string get_top_level_domain_country_code() const noexcept;
+
+  std::string get_alpha_3_code(mtx::iso639::language_t language) const noexcept;
 
   std::string dump() const noexcept;
   std::string format(bool force = false) const noexcept;
@@ -140,6 +144,9 @@ public:
 
   static void disable();
   static bool is_disabled();
+
+  static void use_bib_code();
+  static bool bib_code_is_used();
 };
 
 void init_re();

@@ -21,6 +21,9 @@
   the current font MIME types are always present in the MIME type combo boxes
   of attachments, no matter what Qt's MIME type database contains. Partially
   fixes #3751.
+* Use the terminological language codes instead of the bibliographical ones as
+  default. This is recommended by RFC 5646 which is is the recommended form in
+  Matroska version 4. See discussion at #3090.
 
 
 # Version 88.0 "All I Know" 2024-10-19

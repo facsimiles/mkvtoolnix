@@ -30,6 +30,7 @@ namespace mtx::bcp47 {
 
 bool language_c::ms_disabled                           = false;
 normalization_mode_e language_c::ms_normalization_mode = normalization_mode_e::default_mode;
+bool language_c::ms_use_bib_code                       = false;
 
 bool
 operator <(language_c::extension_t const &a,
@@ -232,6 +233,12 @@ language_c::format_long(bool force)
   return formatted;
 }
 
+std::string
+language_c::get_alpha_3_code(mtx::iso639::language_t language)
+  const noexcept {
+  return (ms_use_bib_code && language.alpha_3_bib_code != "") ? language.alpha_3_bib_code : language.alpha_3_code;
+}
+
 bool
 language_c::parse_language(std::string const &code) {
   auto language = mtx::iso639::look_up(code);
@@ -240,7 +247,7 @@ language_c::parse_language(std::string const &code) {
     return false;
   }
 
-  m_language = !language->alpha_2_code.empty() ? language->alpha_2_code : language->alpha_3_code;
+  m_language = language_c::get_alpha_3_code(language.value());
 
   return true;
 }
@@ -575,7 +582,7 @@ language_c::get_iso639_alpha_3_code()
 
   auto language = mtx::iso639::look_up(m_language);
   if (language)
-    return language->alpha_3_code;
+    return language_c::get_alpha_3_code(language.value());
 
   return {};
 }
@@ -591,16 +598,16 @@ language_c::get_closest_iso639_2_alpha_3_code()
     return "und"s;
 
   if (language->is_part_of_iso639_2)
-    return language->alpha_3_code;
+    return language_c::get_alpha_3_code(language.value());
 
-  auto extlang = mtx::iana::language_subtag_registry::look_up_extlang(language->alpha_3_code);
+  auto extlang = mtx::iana::language_subtag_registry::look_up_extlang(language_c::get_alpha_3_code(language.value()));
   if (!extlang || extlang->prefixes.empty())
     return "und"s;
 
   auto prefix_language = mtx::iso639::look_up(extlang->prefixes.front());
 
   if (prefix_language && prefix_language->is_part_of_iso639_2)
-    return prefix_language->alpha_3_code;
+    return language_c::get_alpha_3_code(prefix_language.value());
 
   return "und"s;
 }
@@ -952,6 +959,16 @@ language_c::disable() {
 bool
 language_c::is_disabled() {
   return ms_disabled;
+}
+
+void
+language_c::use_bib_code() {
+  ms_use_bib_code = true;
+}
+
+bool
+language_c::bib_code_is_used() {
+  return ms_use_bib_code;
 }
 
 void

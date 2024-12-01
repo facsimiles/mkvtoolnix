@@ -126,9 +126,9 @@ TEST(BCP47LanguageTags, FormattingInvalidWithoutLanguage) {
 TEST(BCP47LanguageTags, CodeConversion) {
   language_c::set_normalization_mode(norm_e::none);
   EXPECT_EQ(""s,    language_c{}.get_iso639_alpha_3_code());
-  EXPECT_EQ("ger"s, language_c::parse("de").get_iso639_alpha_3_code());
-  EXPECT_EQ("ger"s, language_c::parse("deu").get_iso639_alpha_3_code());
-  EXPECT_EQ("ger"s, language_c::parse("ger").get_iso639_alpha_3_code());
+  EXPECT_EQ("deu"s, language_c::parse("de").get_iso639_alpha_3_code());
+  EXPECT_EQ("deu"s, language_c::parse("deu").get_iso639_alpha_3_code());
+  EXPECT_EQ("deu"s, language_c::parse("ger").get_iso639_alpha_3_code());
 
   language_c l;
   l.set_language("zyx");
@@ -431,19 +431,19 @@ TEST(BCP47LanguageTags, ClosestISO639_2_Alpha3Code) {
   // extlangs do have ISO 639-2 codes.
 
   // Now some valid cases.
-  EXPECT_EQ("fre"s, language_c::parse("fr-FR").get_closest_iso639_2_alpha_3_code());
-  EXPECT_EQ("ger"s, language_c::parse("de").get_closest_iso639_2_alpha_3_code());
-  EXPECT_EQ("ger"s, language_c::parse("deu").get_closest_iso639_2_alpha_3_code());
-  EXPECT_EQ("ger"s, language_c::parse("ger").get_closest_iso639_2_alpha_3_code());
+  EXPECT_EQ("fra"s, language_c::parse("fr-FR").get_closest_iso639_2_alpha_3_code());
+  EXPECT_EQ("deu"s, language_c::parse("de").get_closest_iso639_2_alpha_3_code());
+  EXPECT_EQ("deu"s, language_c::parse("deu").get_closest_iso639_2_alpha_3_code());
+  EXPECT_EQ("deu"s, language_c::parse("ger").get_closest_iso639_2_alpha_3_code());
 
   // Last the interesting cases: `yue` = "Yue Chinese" doesn't have an
   // ISO 639-2 code, but it is an extlang with a prefix of `zh` =
-  // "Chinese" for which there is an ISO 639-2 code: `chi`. Similarly
+  // "Chinese" for which there is an ISO 639-2 code: `zho`. Similarly
   // for the other two examples (`bsi` = "British Sign Language" → `sgn` = "Sign
   // Languages"; `zsm` = "Standard Malay" → `may` = "Malay (macrolanguage)")
-  EXPECT_EQ("chi"s, language_c::parse("yue").get_closest_iso639_2_alpha_3_code());
+  EXPECT_EQ("zho"s, language_c::parse("yue").get_closest_iso639_2_alpha_3_code());
   EXPECT_EQ("sgn"s, language_c::parse("bfi").get_closest_iso639_2_alpha_3_code());
-  EXPECT_EQ("may"s, language_c::parse("zsm").get_closest_iso639_2_alpha_3_code());
+  EXPECT_EQ("msa"s, language_c::parse("zsm").get_closest_iso639_2_alpha_3_code());
 }
 
 TEST(BCP47LanguageTags, Grandfathered) {

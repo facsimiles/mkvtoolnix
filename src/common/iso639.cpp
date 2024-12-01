@@ -70,7 +70,7 @@ look_up(std::string const &s,
   if (deprecated_code != s_deprecated_1_and_2_codes.end())
     source = deprecated_code->second;
 
-  auto lang_code = std::find_if(g_languages.begin(), g_languages.end(), [&source](auto const &lang) { return (lang.alpha_3_code == source) || (lang.terminology_abbrev == source) || (lang.alpha_2_code == source); });
+  auto lang_code = std::find_if(g_languages.begin(), g_languages.end(), [&source](auto const &lang) { return (lang.alpha_3_code == source) || (lang.alpha_3_bib_code == source) || (lang.alpha_2_code == source); });
   if (lang_code != g_languages.end())
     return *lang_code;
 

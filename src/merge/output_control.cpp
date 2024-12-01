@@ -1776,6 +1776,11 @@ finish_file(bool last_file,
     delete tags_here;
   }
 
+  if (g_doc_type_version_handler->get_version() < 4) {
+    mtx::bcp47::language_c::use_bib_code();
+    // TODO: rewrite all language tags
+  }
+
   auto first_chapter_name = get_first_chapter_name_in_this_file();
 
   if (s_chapters_in_this_file) {
